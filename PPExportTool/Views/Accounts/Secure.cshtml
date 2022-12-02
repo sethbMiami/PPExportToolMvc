@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Secure";
+}
+
+<div>
+    <h1>Secure data displays here</h1>
+
+
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <h2>Not logged in</h2>
+        <div class="container">
+            <a asp-action="Login" asp-controller="Accounts" class="btn" style="border-color:black; background-color: lightblue;">PracticePanther Login</a>
+        </div>
+}
+else
+{
+    <h2>Logged in as @User.Identity.Name</h2>
+
+        <div class="container">
+            <a asp-action="Logout" asp-controller="Accounts" class="btn" style="border-color:black; background-color: lightblue;">PracticePanther Logout</a>
+    </div>
+}
+</div>
+
+

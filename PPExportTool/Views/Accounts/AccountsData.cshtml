@@ -1,0 +1,42 @@
+﻿@using PracticePanther.Api.Model
+@{
+    ViewBag.Title = "GetAccounts";
+
+    var data = (List<Account>)ViewData["Account"];
+}
+
+
+<h1>Accounts</h1>
+<div>
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Created Date</th>
+                <th scope="col">Id</th>
+                <th scope="col">City</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Account contact in data)
+            {
+                <tr>
+                    <td>@contact.DisplayName</td>
+                    <td>@contact.CreatedAt</td>
+                    <td>@contact.Id</td>
+                    <td>@contact.AddressCity</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+    <button type="button" class="btn btn-primary">Items per page</button>
+    <div class="btn-group" role="group">
+        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
+            <a class="dropdown-item" href="#">25</a>
+            <a class="dropdown-item" href="#">50</a>
+        </div>
+    </div>
+</div>

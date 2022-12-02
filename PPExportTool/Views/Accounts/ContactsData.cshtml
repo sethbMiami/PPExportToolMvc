@@ -1,0 +1,41 @@
+﻿@using PracticePanther.Api.Model
+@{
+    ViewBag.Title = "GetAccounts";
+
+    var data = (List<Contact>)ViewData["Contact"];
+}
+
+<h1>Contacts</h1>
+<div>
+    <button id="exporttable" type="button" class="btn btn-info" style="float:right;">Export to CSV</button>
+</div>
+<div>
+    <table id="htmltable" class="table table-hover table-striped">
+        <thead>
+        <tr>
+                <th scope="col">Id</th>
+                <th scope="col">IsPrimary?</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Contact contact in data)
+            {
+                <tr>
+                    <td>@contact.Id</td>
+                    <td>@contact.IsPrimaryContact</td>
+                    <td>@contact.FirstName</td>
+                    <td>@contact.LastName</td>
+                    <td>@contact.Email</td>
+                    @foreach (var item in contact.CustomFieldValues)
+                    {
+                        <td>@item.ValueString</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
