@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using PracticePanther.Api.Model;
-using System.Web.Http;
+using X.PagedList;
+using X.PagedList.Mvc.Core;
 using HttpGetAttribute = System.Web.Http.HttpGetAttribute;
 
 namespace PPExportTool.Controllers
@@ -13,6 +12,24 @@ namespace PPExportTool.Controllers
         public IActionResult Secure()
         {
             return View();
+        }
+        public IActionResult test(int? page = 1)
+        {
+            if (page != 1 && page < 1)
+            {
+                page = 1;
+            }
+
+            var pageSize = 50;
+
+            var numbers = Enumerable.Range(1, 450).ToList();
+            int total = numbers.Count;
+
+            IPagedList<int> pageNumbers = numbers.ToPagedList(page ?? 1, pageSize);
+            
+            ViewData["total"] = total;
+
+            return View(pageNumbers);
         }
 
         public IActionResult Login(string returnUrl = "/")
@@ -27,7 +44,7 @@ namespace PPExportTool.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AccountsData()
+        public async Task<IActionResult> AccountsData(int? page = 1)
         {
             if (!User.Identity.IsAuthenticated)
             {
@@ -35,6 +52,13 @@ namespace PPExportTool.Controllers
             }
             else
             {
+                if (page != 1 && page < 1)
+                {
+                    page = 1;
+                }
+
+                var pageSize = 50;
+
                 var authenticationInfo = await HttpContext.AuthenticateAsync();
 
                 var accessToken = authenticationInfo.Properties.GetTokenValue("access_token");
@@ -54,7 +78,10 @@ namespace PPExportTool.Controllers
 
                 accountsList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Account>>(jsonString);
 
-                ViewData["Account"] = accountsList;
+                IPagedList<Account> pagedAccounts = accountsList.ToPagedList(page ?? 1, pageSize);
+
+
+                ViewData["Account"] = pagedAccounts;
 
                 return View();
             }

@@ -1,0 +1,48 @@
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
+@using X.PagedList;
+@{
+    var total = ViewData["total"];
+}
+<h1>Test</h1>
+<h5>Total: @total</h5>
+    <div>
+        <table id="anyTable" class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Created Date</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">City</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var number in Model)
+                {
+                    <tr id="paginated-list" data-current-page="1">
+                        <td>display name @number</td>
+                        <td>created date @number</td>
+                        <td>Id @number</td>
+                        <td>city number</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <nav>
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("test", new { page = page }), new PagedListRenderOptions()
+            {
+                ActiveLiElementClass = "active",
+                PageClasses = new[]{ "page-link"},
+                LiElementClasses=new[] { "page-item" },
+                UlElementClasses = new[] { "pagination","justify-content-center", "mt-3" },
+                LinkToNextPageFormat = "Next",
+                LinkToPreviousPageFormat = "Previous",
+                MaximumPageNumbersToDisplay = 5,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                DisplayLinkToNextPage = PagedListDisplayMode.Always
+            })
+        </nav>
+    </div>
+
+
+    
