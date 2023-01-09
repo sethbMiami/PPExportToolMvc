@@ -11,6 +11,9 @@
 
 <h1>Accounts</h1>
 <div>
+    <button id="exporttable" type="button" class="btn btn-info" style="float:right;">Export to CSV</button>
+</div>
+<div>
     <table class="table table-hover table-striped">
         <thead>
             <tr>
@@ -33,7 +36,7 @@
         </tbody>
     </table>
     <nav>
-        @Html.PagedListPager((IPagedList)data, page => Url.Action("Accounts", new { page = page }), new PagedListRenderOptions()
+        @Html.PagedListPager((IPagedList)data, page => Url.Action("AccountsData", new { page = page }), new PagedListRenderOptions()
             {
                 ActiveLiElementClass = "active",
                 PageClasses = new[]{ "page-link"},

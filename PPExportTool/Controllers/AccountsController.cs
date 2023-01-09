@@ -87,39 +87,38 @@ namespace PPExportTool.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> ContactsData()
-        {
-            if (!User.Identity.IsAuthenticated)
-            {
-                return View("Secure");
-            }
-            else
-            {
-                var authenticationInfo = await HttpContext.AuthenticateAsync();
+        ////public async Task<IActionResult> ContactsData()
+        ////{
+        ////    if (!User.Identity.IsAuthenticated)
+        ////    {
+        ////        return View("Secure");
+        ////    }
+        ////    else
+        ////    {
+        ////        var authenticationInfo = await HttpContext.AuthenticateAsync();
 
-                var accessToken = authenticationInfo.Properties.GetTokenValue("access_token");
-                var refreshToken = authenticationInfo.Properties.GetTokenValue("refresh_token");
-                var expiresAt = DateTimeOffset.Parse(authenticationInfo.Properties.GetTokenValue("expires_at"));
+        ////        var accessToken = authenticationInfo.Properties.GetTokenValue("access_token");
+        ////        var refreshToken = authenticationInfo.Properties.GetTokenValue("refresh_token");
+        ////        var expiresAt = DateTimeOffset.Parse(authenticationInfo.Properties.GetTokenValue("expires_at"));
 
-                var client = new HttpClient();
-                client.DefaultRequestHeaders.Add("Authorization", $"Bearer {accessToken}");
-                var response = await client.GetAsync("https://app.practicepanther.com/api/v2/contacts");
+        ////        var client = new HttpClient();
+        ////        client.DefaultRequestHeaders.Add("Authorization", $"Bearer {accessToken}");
+        ////        var response = await client.GetAsync("https://app.practicepanther.com/api/v2/contacts");
 
-                List<Contact> contactsList = new List<Contact>();
+        ////        List<Contact> contactsList = new List<Contact>();
 
-                var contacts = await response.Content.ReadAsStringAsync();
+        ////        var contacts = await response.Content.ReadAsStringAsync();
 
-                string jsonString = contacts;
+        ////        string jsonString = contacts;
 
 
-                contactsList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Contact>>(jsonString);
+        ////        contactsList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Contact>>(jsonString);
 
-                ViewData["Contact"] = contactsList;
+        ////        ViewData["Contact"] = contactsList;
 
-                return View();
-            }
-        }
+        ////        return View();
+        ////    }
+        ////}
 
     }
 }
